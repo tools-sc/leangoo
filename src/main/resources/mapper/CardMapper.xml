@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team6.leangoo.mapper.CardMapper" >
+  <resultMap id="BaseResultMap" type="com.team6.leangoo.model.Card" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="card_id" property="cardId" jdbcType="INTEGER" />
+    <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+    <result column="card_intro" property="cardIntro" jdbcType="VARCHAR" />
+    <result column="card_end_date" property="cardEndDate" jdbcType="DATE" />
+    <result column="card_start_date" property="cardStartDate" jdbcType="DATE" />
+    <result column="card_label" property="cardLabel" jdbcType="VARCHAR" />
+    <result column="card_workload" property="cardWorkload" jdbcType="DOUBLE" />
+  </resultMap>
+</mapper>

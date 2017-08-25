@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team6.leangoo.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.team6.leangoo.model.User">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_account" property="userAccount" jdbcType="VARCHAR"/>
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="user_sex" property="userSex" jdbcType="INTEGER"/>
+        <result column="user_intro" property="userIntro" jdbcType="VARCHAR"/>
+        <result column="user_avatar" property="userAvatar" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="userMap" type="com.team6.leangoo.model.User">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_account" property="userAccount" jdbcType="VARCHAR"/>
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="user_sex" property="userSex" jdbcType="INTEGER"/>
+        <result column="user_intro" property="userIntro" jdbcType="VARCHAR"/>
+        <result column="user_avatar" property="userAvatar" jdbcType="VARCHAR"/>
+        <collection property="roles" ofType="com.team6.leangoo.model.Role">
+            <id column="role_id" property="roleId" jdbcType="INTEGER"/>
+            <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+            <result column="role_level" property="roleLevel" jdbcType="VARCHAR"/>
+            <collection property="permissions" ofType="com.team6.leangoo.model.Permission">
+                <id column="permission_id" property="permissionId" jdbcType="INTEGER"/>
+                <result column="permission_name" property="permissionName" jdbcType="VARCHAR"/>
+                <result column="permission_url" property="permissionUrl" jdbcType="VARCHAR"/>
+                <result column="permission_method" property="permissionMethod" jdbcType="VARCHAR"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="findByUserName" parameterType="string" resultMap="userMap">
+        SELECT
+            `user`.user_id,
+            `user`.user_account,
+            `user`.user_password,
+            `user`.user_email,
+            `user`.user_sex,
+            `user`.user_intro,
+            `user`.user_avatar,
+            role.role_id,
+            role.role_name,
+            role.role_level,
+            permission.permission_id,
+            permission.permission_name,
+            permission.permission_url,
+            permission.permission_method
+        FROM
+            `user`
+            INNER JOIN user_role ON user_role.user_id = `user`.user_id
+            INNER JOIN role ON user_role.role_id = role.role_id
+            INNER JOIN role_permission ON role_permission.role_id = role.role_id
+            INNER JOIN permission ON role_permission.permission_id = permission.permission_id
+        WHERE user_account=#{username}
+    </select>
+</mapper>

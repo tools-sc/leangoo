@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team6.leangoo.mapper.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.team6.leangoo.model.Permission" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="permission_id" property="permissionId" jdbcType="INTEGER" />
+    <result column="permission_name" property="permissionName" jdbcType="VARCHAR" />
+    <result column="permission_url" property="permissionUrl" jdbcType="VARCHAR" />
+    <result column="permission_method" property="permissionMethod" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

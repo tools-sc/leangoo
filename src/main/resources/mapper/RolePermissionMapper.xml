@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team6.leangoo.mapper.RolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.team6.leangoo.model.RolePermission" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="permisson_id" property="permissonId" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

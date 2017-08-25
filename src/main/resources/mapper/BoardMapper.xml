@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team6.leangoo.mapper.BoardMapper" >
+  <resultMap id="BaseResultMap" type="com.team6.leangoo.model.Board" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="board_id" property="boardId" jdbcType="INTEGER" />
+    <result column="board_name" property="boardName" jdbcType="VARCHAR" />
+    <result column="board_start_date" property="boardStartDate" jdbcType="DATE" />
+    <result column="board_end_date" property="boardEndDate" jdbcType="DATE" />
+    <result column="board_start" property="boardStart" jdbcType="INTEGER" />
+    <result column="board_locate" property="boardLocate" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

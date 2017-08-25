@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team6.leangoo.mapper.ProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.team6.leangoo.model.Project" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="project_id" property="projectId" jdbcType="INTEGER" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_intro" property="projectIntro" jdbcType="VARCHAR" />
+    <result column="project_create_date" property="projectCreateDate" jdbcType="DATE" />
+    <result column="project_start_date" property="projectStartDate" jdbcType="DATE" />
+    <result column="project_end_date" property="projectEndDate" jdbcType="DATE" />
+  </resultMap>
+</mapper>
