@@ -11,5 +11,6 @@
     <result column="board_end_date" property="boardEndDate" jdbcType="DATE" />
     <result column="board_start" property="boardStart" jdbcType="INTEGER" />
     <result column="board_locate" property="boardLocate" jdbcType="INTEGER" />
+    <result column="board_is_archive" property="boardIsArchive" jdbcType="INTEGER"/>
   </resultMap>
 </mapper>

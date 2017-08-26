@@ -1,8 +1,12 @@
 package com.team6.leangoo.model;
 
+import lombok.ToString;
+
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.*;
-
+@ToString
+@Table(name = "board")
 public class Board {
     @Id
     @Column(name = "board_id")
@@ -22,6 +26,16 @@ public class Board {
 
     @Column(name = "board_locate")
     private Integer boardLocate;
+    @Column(name = "board_is_archive")
+    private Integer boardIsArchive;
+
+    public Integer getBoardIsArchive() {
+        return boardIsArchive;
+    }
+
+    public void setBoardIsArchive(Integer boardIsArchive) {
+        this.boardIsArchive = boardIsArchive;
+    }
 
     /**
      * @return board_id
@@ -57,7 +71,6 @@ public class Board {
     public Date getBoardStartDate() {
         return boardStartDate;
     }
-
     /**
      * @param boardStartDate
      */
