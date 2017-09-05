@@ -2,7 +2,7 @@ package com.team6.leangoo.model;
 
 import java.util.Date;
 import javax.persistence.*;
-
+@Table(name = "project")
 public class Project {
     @Id
     @Column(name = "project_id")
@@ -22,6 +22,16 @@ public class Project {
 
     @Column(name = "project_end_date")
     private Date projectEndDate;
+    @Column(name ="project_is_archive")
+    private Integer projectIsArchive;
+
+    public Integer getProjectIsArchive() {
+        return projectIsArchive;
+    }
+
+    public void setProjectIsArchive(Integer projectIsArchive) {
+        this.projectIsArchive = projectIsArchive;
+    }
 
     /**
      * @return project_id

@@ -11,5 +11,6 @@
     <result column="project_create_date" property="projectCreateDate" jdbcType="DATE" />
     <result column="project_start_date" property="projectStartDate" jdbcType="DATE" />
     <result column="project_end_date" property="projectEndDate" jdbcType="DATE" />
+    <result column="project_is_archive" property="projectIsArchive" jdbcType="INTEGER"/>
   </resultMap>
 </mapper>
