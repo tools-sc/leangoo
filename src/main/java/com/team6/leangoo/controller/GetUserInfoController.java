@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GetUserInfoController {
     private final GetUserInfoService getUserInfoService;
+    private Integer userId = 1;
 
     @Autowired
     public GetUserInfoController(GetUserInfoService getUserInfoService){
@@ -19,25 +20,57 @@ public class GetUserInfoController {
     }
 
     @RequestMapping(value = "/getUserInfoById",method = RequestMethod.POST)
-    public AjaxResult getUserInfoById(Integer userId){
+    public AjaxResult getUserInfoById(){
         AjaxResult ajaxResult = new AjaxResult();
-        ajaxResult.setData(getUserInfoService.getUserInfoById(userId));
-        return ajaxResult;
+        try {
+            ajaxResult.setData(getUserInfoService.getUserInfoById(userId));
+            ajaxResult.seterrcode(0);
+            return ajaxResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.seterrcode(10);
+            ajaxResult.setinfo("请求失败");
+            return ajaxResult;
+        }
     }
 
     @RequestMapping(value = "/changeUserInfo",method = RequestMethod.POST)
     public AjaxResult changeUserInfo(@RequestBody User user){
         AjaxResult ajaxResult = new AjaxResult();
-        ajaxResult.seterrcode(getUserInfoService.changeUserInfo(user));
-        ajaxResult.setData(user);
-        return ajaxResult;
+        try {
+            if (getUserInfoService.changeUserInfo(user)==1) {
+                ajaxResult.seterrcode(0);
+            } else {
+                ajaxResult.seterrcode(10);
+                ajaxResult.setinfo("操作失败");
+            }
+            ajaxResult.setData(user);
+            return ajaxResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.seterrcode(10);
+            ajaxResult.setinfo("请求失败");
+            return ajaxResult;
+        }
     }
 
     @RequestMapping(value = "/changeUserPassword",method = RequestMethod.POST)
     public AjaxResult changeUserPassword(String userPassword){
         AjaxResult ajaxResult = new AjaxResult();
-        //ajaxResult.seterrcode(getUserInfoService.changeUserInfo(user));
-        //ajaxResult.setData(user);
-        return ajaxResult;
+        try {
+            if (getUserInfoService.changeUserPasssword(userPassword,userId) == 1) {
+                ajaxResult.seterrcode(0);
+                ajaxResult.setData(userPassword);
+            } else {
+                ajaxResult.seterrcode(10);
+                ajaxResult.setinfo("操作失败");
+            }
+            return ajaxResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.seterrcode(10);
+            ajaxResult.setinfo("请求失败");
+            return ajaxResult;
+        }
     }
 }

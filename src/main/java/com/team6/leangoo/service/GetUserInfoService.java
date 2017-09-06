@@ -19,10 +19,9 @@ public class GetUserInfoService {
     public int changeUserInfo(User user){
         return userMapper.updateByPrimaryKey(user);
     }
-    public User changeUserPasssword(String userPassword,Integer userId){
-        userId = 4;
+    public int changeUserPasssword(String userPassword,Integer userId){
         User user = userMapper.selectByPrimaryKey(userId);
         user.setUserPassword(userPassword);
-        userMapper.updateByPrimaryKey(user);
+        return userMapper.updateByPrimaryKey(user);
     }
 }
