@@ -51,8 +51,8 @@ public class FriendController {
     public AjaxResult addFriend(@RequestBody Map map){
         Integer userId = 1;
         AjaxResult ajaxResult = new AjaxResult();
-        String friendAccount = map.get("friendAccount").toString();
         try {
+            String friendAccount = map.get("friendAccount").toString();
             User user = getUserInfoService.getUserInfoById(userId);
             User friend = friendService.selectUserByAccount(friendAccount);
             UserFriend userFriend = new UserFriend();
@@ -64,6 +64,34 @@ public class FriendController {
             }else {
                 ajaxResult.seterrcode(2);
                 ajaxResult.setinfo("添加失败，好友已存在!");
+            }
+            ajaxResult.setData(friendService.getFriendList(user));
+            return ajaxResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.seterrcode(10);
+            ajaxResult.setinfo("请求失败");
+            return ajaxResult;
+        }
+    }
+
+    @RequestMapping(value = "/deleteFriend",method = RequestMethod.POST)
+    public AjaxResult deleteFriend(@RequestBody Map map){
+        Integer userId = 1;
+        AjaxResult ajaxResult = new AjaxResult();
+        try {
+            String friendAccount = map.get("friendAccount").toString();
+            User user = getUserInfoService.getUserInfoById(userId);
+            User friend = friendService.selectUserByAccount(friendAccount);
+            UserFriend userFriend = new UserFriend();
+            userFriend.setUserId(user.getUserId());
+            userFriend.setFriendTo(friend.getUserId());
+            if (friendService.deleteFriend(userFriend) == 1){
+                ajaxResult.seterrcode(0);
+                ajaxResult.setinfo("删除成功");
+            }else {
+                ajaxResult.seterrcode(2);
+                ajaxResult.setinfo("删除失败，好友不存在!");
             }
             ajaxResult.setData(friendService.getFriendList(user));
             return ajaxResult;

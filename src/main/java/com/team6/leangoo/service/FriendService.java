@@ -44,6 +44,12 @@ public class FriendService {
         else return 0;
     }
 
+    public int deleteFriend(UserFriend userFriend){
+        if (userFriendMapper.selectOne(userFriend) != null)
+            return userFriendMapper.delete(userFriend);
+        else return 0;
+    }
+
     public User selectUserByAccount(String userAccount){
         User user = new User();
         user.setUserAccount(userAccount);
