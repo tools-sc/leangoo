@@ -53,13 +53,15 @@ public class UserFriendController {
     @RequestMapping(value = "/addFriend",method = RequestMethod.POST)
     public AjaxResult addFriend(@RequestBody Map map){
         Integer userId = 1;
+        User user = new User();
+        user.setUserId(userId);
         AjaxResult ajaxResult = new AjaxResult();
         try {
             String friendAccount = map.get("friendAccount").toString();
-            User user = new User();
-            user.setUserId(userId);
             user = userService.getUserInfoById(user);
-            User friend = userService.selectUserByAccount(friendAccount);
+            User friend = new User();
+            friend.setUserAccount(friendAccount);
+            friend = userService.selectUserByAccount(friend);
             UserFriend userFriend = new UserFriend();
             userFriend.setUserId(user.getUserId());
             userFriend.setFriendTo(friend.getUserId());
@@ -83,13 +85,15 @@ public class UserFriendController {
     @RequestMapping(value = "/deleteFriend",method = RequestMethod.POST)
     public AjaxResult deleteFriend(@RequestBody Map map){
         Integer userId = 1;
+        User user = new User();
+        user.setUserId(userId);
         AjaxResult ajaxResult = new AjaxResult();
         try {
             String friendAccount = map.get("friendAccount").toString();
-            User user = new User();
-            user.setUserId(userId);
             user = userService.getUserInfoById(user);
-            User friend = userService.selectUserByAccount(friendAccount);
+            User friend = new User();
+            friend.setUserAccount(friendAccount);
+            friend = userService.selectUserByAccount(friend);
             UserFriend userFriend = new UserFriend();
             userFriend.setUserId(user.getUserId());
             userFriend.setFriendTo(friend.getUserId());

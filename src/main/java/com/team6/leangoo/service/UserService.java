@@ -20,9 +20,7 @@ public class UserService {
     public int changeUserInfo(User userMsg){
         return userMapper.updateByPrimaryKeySelective(userMsg);
     }
-    public User selectUserByAccount(String userAccount){
-        User user = new User();
-        user.setUserAccount(userAccount);
+    public User selectUserByAccount(User user){
         return userMapper.selectOne(user);
     }
 }
