@@ -67,9 +67,19 @@ public class BoardController {
         }
     }
     @RequestMapping(value = "/newBoard",method = RequestMethod.POST)
-    public AjaxResult newBoard(@RequestBody Map map){
-        Integer userId=1;
-        return null;
+    public AjaxResult newBoard(Board board,ProjectBoard projectBoard){
+        AjaxResult ajaxResult=new AjaxResult();
+        try {
+            if(boardService.newBoard(board,projectBoard)==-1)
+                ajaxResult.seterrcode(4);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.seterrcode(10);
+            ajaxResult.setinfo("请求失败");
+        }finally {
+            return ajaxResult;
+        }
+
 
     }
 }
