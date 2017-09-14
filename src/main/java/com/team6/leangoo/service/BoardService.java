@@ -1,7 +1,9 @@
 package com.team6.leangoo.service;
 
 import com.team6.leangoo.mapper.BoardMapper;
+import com.team6.leangoo.mapper.ProjectBoardMapper;
 import com.team6.leangoo.model.Board;
+import com.team6.leangoo.model.ProjectBoard;
 import com.team6.leangoo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ import java.util.Map;
 public class BoardService {
     @Autowired
     private BoardMapper boardMapper;
+    @Autowired
+    private ProjectBoardMapper projectBoardMapper;
 
     public List getArchiveBoardList(User user){
         List<Board> boards = boardMapper.getArchiveBoards(user.getUserId());
@@ -34,5 +38,9 @@ public class BoardService {
             list.add(map);
         }
         return list;
+    }
+    public Integer newBoard(Board board,Integer projectId){
+      Integer boardId=boardMapper.insert(board);
+
     }
 }
