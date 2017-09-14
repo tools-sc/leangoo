@@ -1,8 +1,12 @@
 package com.team6.leangoo.service;
 
 import com.team6.leangoo.mapper.BoardMapper;
+import com.team6.leangoo.mapper.ProjectBoardMapper;
+import com.team6.leangoo.mapper.ProjectMapper;
 import com.team6.leangoo.model.Board;
+import com.team6.leangoo.model.ProjectBoard;
 import com.team6.leangoo.model.User;
+import com.team6.leangoo.util.CheckId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +27,30 @@ import java.util.Map;
 public class BoardService {
     @Autowired
     private BoardMapper boardMapper;
+    @Autowired
+    private ProjectBoardMapper projectBoardMapper;
+    @Autowired
+    private ProjectMapper projectMapper;
 
-    public List getArchiveBoardList(User user){
+    public List getArchiveBoardList(User user) {
         List<Board> boards = boardMapper.getArchiveBoards(user.getUserId());
         List list = new ArrayList();
-        for (Board temp:boards){
+        for (Board temp : boards) {
             Map map = new HashMap();
-            map.put("boardId",temp.getBoardId());
-            map.put("boardName",temp.getBoardName());
+            map.put("boardId", temp.getBoardId());
+            map.put("boardName", temp.getBoardName());
             list.add(map);
         }
         return list;
+    }
+
+    public Integer newBoard(Board board, ProjectBoard projectBoard) {
+        int boardId = boardMapper.insertUseGeneratedKeys(board);
+        Integer projectId = projectBoard.getProjectId();
+        if (CheckId.canInsert(projectMapper, projectId)) {
+            projectBoard.setBoardId(boardId);
+            projectBoardMapper.insert(projectBoard);
+            return boardId;
+        } else return -1;
     }
 }
