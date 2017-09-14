@@ -5,7 +5,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.*;
 import javax.persistence.*;
 @ToString
 @Table(name = "board")
@@ -33,8 +33,20 @@ public class Board {
 
     @Column(name = "board_locate")
     private Integer boardLocate;
+
     @Column(name = "board_is_archive")
     private Integer boardIsArchive;
+
+    @Transient
+    private java.util.List<List> lists=new ArrayList<>();
+
+    public java.util.List<List> getLists() {
+        return lists;
+    }
+
+    public void setLists(java.util.List<List> lists) {
+        this.lists = lists;
+    }
 
     public Integer getBoardIsArchive() {
         return boardIsArchive;

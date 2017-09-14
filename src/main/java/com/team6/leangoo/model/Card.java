@@ -26,6 +26,17 @@ public class Card {
     @Column(name = "card_workload")
     private Double cardWorkload;
 
+    @Column(name = "card_locate")
+    private Integer cardLocate;
+
+    public Integer getCardLocate() {
+        return cardLocate;
+    }
+
+    public void setCardLocate(Integer cardLocate) {
+        this.cardLocate = cardLocate;
+    }
+
     /**
      * @return card_id
      */

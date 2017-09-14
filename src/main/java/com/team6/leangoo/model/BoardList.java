@@ -2,18 +2,17 @@ package com.team6.leangoo.model;
 
 import javax.persistence.*;
 
-@Table(name = "list_card")
-public class ListCard {
+@Table(name = "board_list")
+public class BoardList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "card_id")
-    private Integer cardId;
+    @Column(name = "board_id")
+    private Integer boardId;
 
     @Column(name = "list_id")
     private Integer listId;
-
 
     /**
      * @return id
@@ -30,17 +29,17 @@ public class ListCard {
     }
 
     /**
-     * @return card_id
+     * @return board_id
      */
-    public Integer getCardId() {
-        return cardId;
+    public Integer getBoardId() {
+        return boardId;
     }
 
     /**
-     * @param cardId
+     * @param boardId
      */
-    public void setCardId(Integer cardId) {
-        this.cardId = cardId;
+    public void setBoardId(Integer boardId) {
+        this.boardId = boardId;
     }
 
     /**
@@ -56,5 +55,4 @@ public class ListCard {
     public void setListId(Integer listId) {
         this.listId = listId;
     }
-
 }

@@ -45,12 +45,12 @@ public class BoardService {
     }
 
     public Integer newBoard(Board board, ProjectBoard projectBoard) {
-        int boardId = boardMapper.insertUseGeneratedKeys(board);
+        boardMapper.insertUseGeneratedKeys(board);
         Integer projectId = projectBoard.getProjectId();
         if (CheckId.canInsert(projectMapper, projectId)) {
-            projectBoard.setBoardId(boardId);
+            projectBoard.setBoardId(board.getBoardId());
             projectBoardMapper.insert(projectBoard);
-            return boardId;
+            return board.getBoardId();
         } else return -1;
     }
 }
