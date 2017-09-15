@@ -2,9 +2,11 @@ package com.team6.leangoo.service;
 
 import com.team6.leangoo.mapper.BoardMapper;
 import com.team6.leangoo.mapper.CardMapper;
+import com.team6.leangoo.mapper.ListCardMapper;
 import com.team6.leangoo.model.Board;
 import com.team6.leangoo.model.Card;
 import com.team6.leangoo.model.List;
+import com.team6.leangoo.model.ListCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ public class CardService {
     private BoardMapper boardMapper;
     @Autowired
     private CardMapper cardMapper;
+    @Autowired
+    private ListCardMapper listCardMapper;
 
     public Board getCardList(Integer boardId) {
         return boardMapper.getList(boardId);
@@ -30,5 +34,12 @@ public class CardService {
 
     public Integer newCard(Card card) {
         return cardMapper.insert(card);
+    }
+    public Integer delCard(Card card){
+        ListCard listCard=new ListCard();
+        listCard.setCardId(card.getCardId());
+        listCardMapper.delete(listCard);
+        return cardMapper.deleteByPrimaryKey(card);
+
     }
 }

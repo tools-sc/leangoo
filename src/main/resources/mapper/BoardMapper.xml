@@ -70,6 +70,6 @@
         LEFT JOIN list ON board_list.list_id=list.list_id
         LEFT JOIN list_card ON list.list_id=list_card.list_id
         LEFT JOIN card ON list_card.card_id=list_card.card_id
-        WHERE board.board_id=#{boardId}
+        WHERE board.board_id=#{boardId} ORDER BY list.list_locate,card.card_locate
     </select>
 </mapper>
