@@ -8,7 +8,7 @@ package com.team6.leangoo.util;
 public class AjaxResult {
 
 
-	private int errcode = 1;
+	private int errcode = 0;
 	private String info = "操作成功";
 	private Object data;
 	

@@ -1,6 +1,7 @@
 package com.team6.leangoo.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 public class List {
     @Id
@@ -12,6 +13,17 @@ public class List {
 
     @Column(name = "list_locate")
     private String listLocate;
+
+    @Transient
+    private java.util.List<Card> cardList=new ArrayList<>();
+
+    public java.util.List<Card> getCardList() {
+        return cardList;
+    }
+
+    public void setCardList(java.util.List<Card> cardList) {
+        this.cardList = cardList;
+    }
 
     /**
      * @return list_id
