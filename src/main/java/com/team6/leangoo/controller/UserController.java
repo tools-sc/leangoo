@@ -28,21 +28,10 @@ public class UserController {
 
     @RequestMapping(value = "/getUserInfoById",method = RequestMethod.POST)
     public AjaxResult getUserInfoById(){
-        Integer userId = 1;
-        AjaxResult ajaxResult = new AjaxResult();
-        try {
-            User user = new User();
-            user.setUserId(userId);
-            user = userService.getUserInfoById(user);
-            ajaxResult.setData(user);
-            ajaxResult.seterrcode(0);
-            return ajaxResult;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ajaxResult.seterrcode(10);
-            ajaxResult.setinfo("请求失败");
-            return ajaxResult;
-        }
+        Integer userId =90;
+        User user=new User();
+        user.setUserId(userId);
+        return new AjaxResult(userService.getUserInfoById(user));
     }
 
     @RequestMapping(value = "/changeUserInfo",method = RequestMethod.POST)
