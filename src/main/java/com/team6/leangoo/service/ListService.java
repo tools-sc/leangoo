@@ -14,15 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ListService {
     @Autowired
-    private final ListMapper listMapper;
+    private  ListMapper listMapper;
     @Autowired
-    private final BoardMapper boardMapper;
+    private  BoardMapper boardMapper;
     @Autowired
-    private final BoardListMapper boardListMapper;
+    private  BoardListMapper boardListMapper;
     @Autowired
-    private final CardMapper cardMapper;
+    private  CardMapper cardMapper;
     @Autowired
-    private final ListCardMapper listCardMapper;
+    private  ListCardMapper listCardMapper;
 
 
     public Integer newList(List list, BoardList boardList) {

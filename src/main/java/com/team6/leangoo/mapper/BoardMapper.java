@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface BoardMapper extends MyMapper<Board> {
-    public List getArchiveBoards(Integer userId);
-    public Board getList(@Param("boardId") Integer boardId);
+     List getArchiveBoards(Integer userId);
+     Board getList(@Param("boardId") Integer boardId);
 }

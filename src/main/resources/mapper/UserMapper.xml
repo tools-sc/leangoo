@@ -75,16 +75,16 @@
             board.board_name,
             board.board_start_date,
             board.board_end_date,
-            board.board_locate
+            board.board_locate,
+            board.board_is_archive,
+            board.board_start
         FROM
-            user
-            LEFT JOIN project_user
-                ON user.user_id = project_user.user_id
-            LEFT JOIN project
-                ON project_user.project_id = project.project_id
-            LEFT JOIN project_board ON project.project_id = project_board.board_id
-            LEFT JOIN board ON project_board.board_id = board.board_id
-        WHERE project_user.is_personal=1 AND project.project_is_archive=0 AND
-            board_is_archive=0 AND user.user_id=#{userId}
+           board
+        LEFT JOIN project_board ON board.board_id=project_board.board_id
+        LEFT JOIN project ON project_board.project_id=project.project_id
+        LEFT JOIN project_user ON project.project_id=project_user.project_id
+        LEFT JOIN user ON project_user.user_id=user.user_id
+        WHERE user.user_id=#{userId} AND project_user.is_personal=1 AND board_is_archive=0
+        AND project_is_archive=0 ORDER BY board_locate
     </select>
 </mapper>

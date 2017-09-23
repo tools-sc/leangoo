@@ -1,7 +1,6 @@
 package com.team6.leangoo.controller;
 
 import com.team6.leangoo.model.Card;
-import com.team6.leangoo.model.ListCard;
 import com.team6.leangoo.service.CardService;
 import com.team6.leangoo.util.AjaxResult;
 import com.team6.leangoo.util.DateUtil;
@@ -25,10 +24,9 @@ public class CardController {
         AjaxResult ajaxResult = new AjaxResult();
         try {
             ajaxResult.setData(cardService.getCardList(boardId).getLists());
-            ajaxResult.seterrcode(0);
         } catch (Exception e) {
             e.printStackTrace();
-            ajaxResult.seterrcode(10);
+            ajaxResult.seterrcode(AjaxResult.ERRCODE_SYSTEM_ERROR);
             ajaxResult.setinfo("请求失败");
         } finally {
             return ajaxResult;
