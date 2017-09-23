@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@EnableWebMvc
 @MapperScan(basePackages = "com.team6.leangoo.mapper")
 public class LeangooApplication {
 
