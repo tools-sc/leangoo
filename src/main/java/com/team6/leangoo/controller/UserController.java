@@ -5,6 +5,7 @@ import com.team6.leangoo.service.UserService;
 import com.team6.leangoo.util.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.ServletContext;
@@ -28,7 +29,7 @@ public class UserController {
 
     @RequestMapping(value = "/getUserInfoById",method = RequestMethod.POST)
     public AjaxResult getUserInfoById(){
-        Integer userId =90;
+        Integer userId =1;
         User user=new User();
         user.setUserId(userId);
         return new AjaxResult(userService.getUserInfoById(user));
@@ -93,17 +94,16 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/updateUserAvatar",method = RequestMethod.POST)
-    public AjaxResult updateUserAvatar(@RequestParam("userAvatar") CommonsMultipartFile userAvatar, HttpServletRequest request){
+    @RequestMapping(value = "/changeAvatar",method = RequestMethod.POST)
+    public AjaxResult changeAvatar(@RequestParam("userAvatar") MultipartFile userAvatar, HttpServletRequest request){
         Integer userId = 1;
         AjaxResult ajaxResult = new AjaxResult();
         try {
-            //String fileName = userAvatar.getOriginalFilename();
-            //System.out.println("文件名:" + fileName);
-            String newFileName = userId + "avatar";
-            //System.out.println(newFileName);
+            String fileName = userAvatar.getOriginalFilename();
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            String newFileName = userId + "avatar"+suffixName;
             ServletContext sc = request.getSession().getServletContext();
-            String path = sc.getRealPath("/userAvatar") + "/";
+            String path = request.getSession().getServletContext().getRealPath("avatar/");
             File f = new File(path);
             if (!f.exists())
                 f.mkdirs();
@@ -125,7 +125,7 @@ public class UserController {
 
             User user = new User();
             user.setUserId(userId);
-            user.setUserAvatar(newFileName);//要不要 path+ ?
+            user.setUserAvatar(path+newFileName);//要不要 path+ ?
             if (userService.changeUserInfo(user)==1) {
                 ajaxResult.seterrcode(0);
             } else {
@@ -133,7 +133,7 @@ public class UserController {
                 ajaxResult.setinfo("操作失败");
             }
             Map map = new HashMap();
-            map.put("userAvatar",newFileName);
+            map.put("userAvatar",path+newFileName);
             ajaxResult.setData(map);
             return ajaxResult;
         } catch (Exception e) {
