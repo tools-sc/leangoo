@@ -1,10 +1,12 @@
 package com.team6.leangoo.controller;
 
+import com.team6.leangoo.model.Board;
 import com.team6.leangoo.model.Card;
 import com.team6.leangoo.service.CardService;
 import com.team6.leangoo.util.AjaxResult;
 import com.team6.leangoo.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +22,13 @@ public class CardController {
     @Autowired private CardService cardService;
 
     @RequestMapping(value = "/getCardList", method = RequestMethod.POST)
-    public AjaxResult getCardList(Integer boardId) {
+    public AjaxResult getCardList(@RequestBody Board board) {
         AjaxResult ajaxResult = new AjaxResult();
         try {
-            ajaxResult.setData(cardService.getCardList(boardId).getLists());
+            Board board1=cardService.getCardList(board.getBoardId());
+            if(board1!=null)
+            ajaxResult.setData(board1.getLists());
+            else ajaxResult.seterrcode(AjaxResult.ERRCODE_NOT_EXITS);
         } catch (Exception e) {
             e.printStackTrace();
             ajaxResult.seterrcode(AjaxResult.ERRCODE_SYSTEM_ERROR);

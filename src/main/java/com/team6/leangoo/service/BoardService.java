@@ -53,4 +53,7 @@ public class BoardService {
             return board.getBoardId();
         } else return -1;
     }
+    public Board getBoardById(Board board){
+        return boardMapper.selectByPrimaryKey(board);
+    }
 }
