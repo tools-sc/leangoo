@@ -2,6 +2,7 @@ package com.team6.leangoo.controller;
 
 import com.team6.leangoo.model.Board;
 import com.team6.leangoo.model.Card;
+import com.team6.leangoo.model.ListCard;
 import com.team6.leangoo.service.CardService;
 import com.team6.leangoo.util.AjaxResult;
 import com.team6.leangoo.util.DateUtil;
@@ -52,12 +53,12 @@ public class CardController {
         }
     }
     @RequestMapping(value="/newCard",method = RequestMethod.POST)
-    public AjaxResult newCard(Card card){
+    public AjaxResult newCard(Card card, ListCard listCard){
         AjaxResult ajaxResult=new AjaxResult();
         card.setCardStartDate(DateUtil.LocalDateToDate(LocalDate.now()));
         card.setCardEndDate(DateUtil.LocalDateToDate(LocalDate.now().plusDays(7)));
         try {
-            ajaxResult.setData(cardService.newCard(card));
+            ajaxResult.setData(cardService.newCard(card,listCard));
             ajaxResult.seterrcode(0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +69,7 @@ public class CardController {
         }
     }
     @RequestMapping(value = "/delCard",method = RequestMethod.POST)
-    public AjaxResult delCard(Card card){
+    public AjaxResult delCard(@RequestBody Card card){
         AjaxResult ajaxResult=new AjaxResult();
         try {
             ajaxResult.setData(cardService.delCard(card));
@@ -80,5 +81,8 @@ public class CardController {
             return ajaxResult;
         }
     }
-
+    @RequestMapping(value = "/updateCardList",method = RequestMethod.POST)
+    public AjaxResult updateCardList(@RequestBody Board board){
+       return new AjaxResult(cardService.updateCardList(board));
+    }
 }
