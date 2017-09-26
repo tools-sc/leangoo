@@ -59,5 +59,8 @@ public class BoardService {
     public Board getBoardById(Board board){
         return boardMapper.selectByPrimaryKey(board);
     }
+    public Integer updateBoard(Board board){
+        return boardMapper.updateByPrimaryKeySelective(board);
+    }
 
 }

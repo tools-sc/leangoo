@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class List {
     @Id
     @Column(name = "list_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer listId;
 
     @Column(name = "list_name")

@@ -86,4 +86,8 @@ public class BoardController {
     public AjaxResult getBoardById(@RequestBody Board board){
        return new AjaxResult(boardService.getBoardById(board));
     }
+    @RequestMapping(value = "/updateBoard",method = RequestMethod.POST)
+    public AjaxResult updateBoard(@RequestBody Board board){
+        return new AjaxResult(boardService.updateBoard(board));
+    }
 }
