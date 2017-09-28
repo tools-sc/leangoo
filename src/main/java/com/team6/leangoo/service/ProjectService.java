@@ -53,7 +53,7 @@ public class ProjectService {
         for(Project temp:projects){
             if(temp.getBoardList()!=null&&temp.getBoardList().size()>0){
             temp.setBoardList(temp.getBoardList().stream()
-                        .filter(board ->board.getBoardIsArchive() !=1).collect(Collectors.toList()));
+                        .filter(board ->board.getBoardIsArchive()!=null&&board.getBoardIsArchive() !=1).collect(Collectors.toList()));
             }
         }
         return projects;
@@ -125,4 +125,11 @@ public class ProjectService {
         }
         return boardList;
     }
+    public Integer getUserPersonalProjectId(Integer userId){
+        ProjectUser projectUser=new ProjectUser();
+        projectUser.setUserId(userId);
+        projectUser.setIsPersonal(1);
+        return projectUserMapper.select(projectUser).get(0).getProjectId();
+    }
+
 }

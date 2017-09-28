@@ -231,4 +231,10 @@ public class ProjectController {
             return ajaxResult;
         }
     }
+    @RequestMapping(value = "/getUserPersonalProjectId",method = RequestMethod.POST)
+    public AjaxResult getUserPersonalProjectId(){
+        Integer userId=1;
+        return new AjaxResult(projectService.getUserPersonalProjectId(userId));
+    }
+
 }
