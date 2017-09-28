@@ -33,15 +33,19 @@ public class ListService {
         } else return null;
     }
 
-    public Integer delList(List list) {
+    public Integer delList(List list,Board board) {
         if(list!=null&&list.getListId()!=null){
         BoardList boardList = new BoardList();
         Example example = new Example(Card.class);
         example.createCriteria().andEqualTo("cardListId", list.getListId());
         boardList.setListId(list.getListId());
+        boardList.setBoardId(board.getBoardId());
         boardListMapper.delete(boardList);
         cardMapper.deleteByExample(example);
         }
         return listMapper.deleteByPrimaryKey(list);
+    }
+    public Integer updateList(List list){
+        return listMapper.updateByPrimaryKeySelective(list);
     }
 }

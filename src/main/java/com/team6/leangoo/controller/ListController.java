@@ -1,5 +1,6 @@
 package com.team6.leangoo.controller;
 
+import com.team6.leangoo.model.Board;
 import com.team6.leangoo.model.BoardList;
 import com.team6.leangoo.model.List;
 import com.team6.leangoo.service.ListService;
@@ -34,17 +35,11 @@ public class ListController {
         }
     }
     @RequestMapping(value = "/delList",method = RequestMethod.POST)
-    public AjaxResult delList(@RequestBody List list){
-        System.out.println(list.toString());
-        AjaxResult ajaxResult=new AjaxResult();
-        try {
-            ajaxResult.setData(listService.delList(list));
-            ajaxResult.seterrcode(10);
-            ajaxResult.setinfo("操作失败");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return ajaxResult;
-        }
+    public AjaxResult delList(List list, Board board){
+       return new AjaxResult(listService.delList(list,board));
+    }
+    @RequestMapping(value = "/updateList",method = RequestMethod.POST)
+    public AjaxResult updateList(@RequestBody List list){
+        return new AjaxResult(listService.updateList(list));
     }
 }
