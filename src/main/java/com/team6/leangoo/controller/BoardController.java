@@ -10,6 +10,7 @@ import com.team6.leangoo.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,8 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/getArchiveBoardList",method = RequestMethod.POST)
-    public AjaxResult getArchiveBoardList(){
-        Integer userId = 1;
+    public AjaxResult getArchiveBoardList(HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
         User user = new User();
         user.setUserId(userId);
         AjaxResult ajaxResult = new AjaxResult();
@@ -51,9 +52,21 @@ public class BoardController {
             return ajaxResult;
         }
     }
+    @RequestMapping(value = "/archiveBoard",method = RequestMethod.POST)
+    public AjaxResult archiveBoard(@RequestBody Board board){
+        return new AjaxResult(boardService.archiveBoard(board));
+    }
+    @RequestMapping(value = "/reArchiveBoard",method = RequestMethod.POST)
+    public AjaxResult reArchiveBoard(@RequestBody Board board){
+        return new AjaxResult(boardService.reArchiveBoard(board));
+    }
+    @RequestMapping(value = "/delBoard",method = RequestMethod.POST)
+    public AjaxResult delBoard(@RequestBody Board board){
+       return new AjaxResult(boardService.delBoard(board));
+    }
     @RequestMapping(value = "/getUserPersonalBoardList",method = RequestMethod.POST)
-    public AjaxResult getUserPersonalBoardList(){
-        Integer userId=1;
+    public AjaxResult getUserPersonalBoardList(HttpSession session){
+        Integer userId= (Integer) session.getAttribute("userId");
         AjaxResult ajaxResult=new AjaxResult();
         try {
             User user=userService.selectUserPersonalBoardList(userId);

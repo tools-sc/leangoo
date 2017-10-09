@@ -1,17 +1,16 @@
 package com.team6.leangoo.service;
 
+import com.team6.leangoo.mapper.ProjectBoardMapper;
 import com.team6.leangoo.mapper.ProjectMapper;
 import com.team6.leangoo.mapper.ProjectUserMapper;
 import com.team6.leangoo.mapper.UserMapper;
-import com.team6.leangoo.model.Board;
-import com.team6.leangoo.model.Project;
-import com.team6.leangoo.model.ProjectUser;
-import com.team6.leangoo.model.User;
+import com.team6.leangoo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -30,6 +29,10 @@ public class ProjectService {
     private ProjectUserMapper projectUserMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ProjectBoardMapper projectBoardMapper;
+    @Autowired
+    private BoardService boardService;
 
     public List getArchiveProjectList(User user) {
         List<Project> projects = projectMapper.getArchiveProjects(user.getUserId());
@@ -49,11 +52,11 @@ public class ProjectService {
     }
 
     public List<Project> getUserProjectList(User user) {
-        List<Project> projects=projectMapper.getUserProjectList(user.getUserId());
-        for(Project temp:projects){
-            if(temp.getBoardList()!=null&&temp.getBoardList().size()>0){
-            temp.setBoardList(temp.getBoardList().stream()
-                        .filter(board ->board.getBoardIsArchive()!=null&&board.getBoardIsArchive() !=1).collect(Collectors.toList()));
+        List<Project> projects = projectMapper.getUserProjectList(user.getUserId());
+        for (Project temp : projects) {
+            if (temp.getBoardList() != null && temp.getBoardList().size() > 0) {
+                temp.setBoardList(temp.getBoardList().stream()
+                        .filter(board -> board.getBoardIsArchive() != null && board.getBoardIsArchive() != 1).collect(Collectors.toList()));
             }
         }
         return projects;
@@ -80,6 +83,7 @@ public class ProjectService {
     public int addProjectLeaguer(Project project, User user) {
         ProjectUser projectUser = new ProjectUser();
         projectUser.setProjectId(project.getProjectId());
+        projectUser.setIsPersonal(0);
         user = userMapper.selectOne(user);
         projectUser.setUserId(user.getUserId());
         if (projectUserMapper.selectOne(projectUser) == null) {
@@ -114,15 +118,17 @@ public class ProjectService {
         }
         return boardList;
     }
-    public Integer getUserPersonalProjectId(Integer userId){
-        ProjectUser projectUser=new ProjectUser();
+
+    public Integer getUserPersonalProjectId(Integer userId) {
+        ProjectUser projectUser = new ProjectUser();
         projectUser.setUserId(userId);
         projectUser.setIsPersonal(1);
         return projectUserMapper.select(projectUser).get(0).getProjectId();
     }
-    public Integer newProject(Integer userId,Project project){
+
+    public Integer newProject(Integer userId, Project project) {
         projectMapper.insert(project);
-        ProjectUser projectUser=new ProjectUser();
+        ProjectUser projectUser = new ProjectUser();
         projectUser.setUserId(userId);
         projectUser.setProjectId(project.getProjectId());
         projectUser.setIsPersonal(0);
@@ -130,4 +136,23 @@ public class ProjectService {
         return project.getProjectId();
     }
 
+    public Integer delProject(Project project) {
+        ProjectBoard projectBoard = new ProjectBoard();
+        projectBoard.setProjectId(project.getProjectId());
+        List<ProjectBoard> projectBoards = projectBoardMapper.select(projectBoard);
+        Board board = new Board();
+        projectBoards.forEach(pb -> {
+            board.setBoardId(pb.getBoardId());
+            boardService.delBoard(board);
+            board.setBoardId(null);
+        });
+        ProjectUser projectUser =new ProjectUser();
+        projectUser.setProjectId(project.getProjectId());
+        projectUserMapper.delete(projectUser);
+        return  projectMapper.delete(project);
+    }
+    public Integer reArchiveProject(Project project){
+        project.setProjectIsArchive(0);
+        return projectMapper.updateByPrimaryKeySelective(project);
+    }
 }

@@ -18,13 +18,13 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-    @RequestMapping("/index")
+    @RequestMapping("/")
     public String index(){
         return "index";
 
     }
 
-    @RequestMapping(value = "/login")
+   // @RequestMapping(value = "/login")
     public ModelAndView login(HttpServletRequest request) throws Exception{
         System.out.println(request.getAttribute("username"));
         ModelAndView mv=new ModelAndView();

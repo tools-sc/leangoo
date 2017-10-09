@@ -10,6 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -28,16 +29,16 @@ public class UserController {
 
 
     @RequestMapping(value = "/getUserInfoById",method = RequestMethod.POST)
-    public AjaxResult getUserInfoById(){
-        Integer userId =1;
+    public AjaxResult getUserInfoById(HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
         User user=new User();
         user.setUserId(userId);
         return new AjaxResult(userService.getUserInfoById(user));
     }
 
     @RequestMapping(value = "/changeUserInfo",method = RequestMethod.POST)
-    public AjaxResult changeUserInfo(@RequestBody User userMsg){
-        Integer userId = 1;
+    public AjaxResult changeUserInfo(@RequestBody User userMsg,HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
         AjaxResult ajaxResult = new AjaxResult();
         try {
             userMsg.setUserId(userId);
@@ -61,8 +62,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/changeUserPassword",method = RequestMethod.POST)
-    public AjaxResult changeUserPassword(@RequestBody Map map){
-        Integer userId = 1;
+    public AjaxResult changeUserPassword(@RequestBody Map map,HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
         AjaxResult ajaxResult = new AjaxResult();
         try {
             User user = new User();
@@ -95,8 +96,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/changeAvatar",method = RequestMethod.POST)
-    public AjaxResult changeAvatar(@RequestParam("userAvatar") MultipartFile userAvatar, HttpServletRequest request){
-        Integer userId = 1;
+    public AjaxResult changeAvatar(@RequestParam("userAvatar") MultipartFile userAvatar, HttpServletRequest request,HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
         AjaxResult ajaxResult = new AjaxResult();
         try {
             String fileName = userAvatar.getOriginalFilename();
