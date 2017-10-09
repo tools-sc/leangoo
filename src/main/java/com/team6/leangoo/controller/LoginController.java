@@ -40,6 +40,7 @@ public class LoginController {
         AjaxResult ajaxResult = new AjaxResult();
         if (dbUser == null) {
             user.setUserPassword(pwd);
+            user.setUserSex(0);
             ajaxResult.setData(userService.insertUser(user));
             session.setAttribute("userId", user.getUserId());
             return ajaxResult;
