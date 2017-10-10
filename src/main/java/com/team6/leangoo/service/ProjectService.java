@@ -4,14 +4,19 @@ import com.team6.leangoo.mapper.ProjectBoardMapper;
 import com.team6.leangoo.mapper.ProjectMapper;
 import com.team6.leangoo.mapper.ProjectUserMapper;
 import com.team6.leangoo.mapper.UserMapper;
-import com.team6.leangoo.model.*;
+import com.team6.leangoo.model.Board;
+import com.team6.leangoo.model.Project;
+import com.team6.leangoo.model.ProjectBoard;
+import com.team6.leangoo.model.ProjectUser;
+import com.team6.leangoo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -123,7 +128,13 @@ public class ProjectService {
         ProjectUser projectUser = new ProjectUser();
         projectUser.setUserId(userId);
         projectUser.setIsPersonal(1);
-        return projectUserMapper.select(projectUser).get(0).getProjectId();
+        List<ProjectUser> projectUsers = projectUserMapper.select(projectUser);
+        if (projectUsers.size() > 0){
+            return projectUsers.get(0).getProjectId();
+        }else{
+            return 0;
+        }
+        //return projectUserMapper.select(projectUser).get(0).getProjectId();
     }
 
     public Integer newProject(Integer userId, Project project) {

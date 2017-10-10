@@ -73,6 +73,7 @@ CREATE TABLE `card` (
   `card_label` varchar(255) DEFAULT NULL,
   `card_workload` double DEFAULT NULL,
   `card_locate` int(11) DEFAULT NULL,
+  `card_list_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`card_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
